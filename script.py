@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, make_response, flash
 import datetime
 from flask_sqlalchemy import SQLAlchemy
+
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
 
@@ -20,6 +21,18 @@ db = SQLAlchemy(app)
 def index():
     if request.method == "GET":
         return render_template('main.html')
+    if request.method == "POST":
+        return redirect('/places')
+
+
+@app.route('/places', methods=["GET", "POST"])
+def places():
+    if request.method == "GET":
+        return render_template('table.html')
+    if request.method == "POST":
+        return redirect('/places')
+
+
 @app.route('/weatherHandler', methods=["POST"])
 def weatherHandler():
     config = get_default_config()  # get_config_from("config.json")
@@ -28,8 +41,7 @@ def weatherHandler():
     mgr = owm.weather_manager()
 
 
-
 if __name__ == "__main__":
     db.create_all()
-    #startBot()
+    # startBot()
     app.run(port=5000)

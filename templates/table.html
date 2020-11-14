@@ -1,0 +1,54 @@
+{%extends 'template.html'%}
+{%block title%}Лучшие места{%endblock%}
+{%block content%}
+<img src="/static/family.jpg">
+<div style="margin-left:100px;margin-right:100px">
+    <br>
+    <span style="text-align:center;">
+        <h1>Лучшие места для отдыха на природе.</h1>
+    </span>
+    <br>
+    <div style="background-color:#EDEDED; font-size:22px;" class="p-5">
+        <p>
+            Один из лучший поисковых систем для отдыха дружной компанией. Если куда поехать, то с помощью нашей высокотехнологичной системы вы сможете узнать лучшие места. Просто введите свое местоположение в поиск и нажмите кнопку отправки и вы получите лучшие места для вас.
+        </p>
+    </div>
+    <br>
+    <span style="text-align:center;">
+        <h2>Москва</h2>
+    </span>
+    <br>
+    <div style="padding-left:50px;padding-right:50px;">
+        <div class="row">
+            <div class="col-1 mx-auto d-block border-right border-left">
+                <h3>№</h3>
+            </div>
+            <div class="col-5 mx-auto d-block border-right border-left">
+                <h3>Название города</h3>
+            </div>
+            <div class="col-3 mx-auto d-block border-right border-left">
+                <h3>Температура</h3>
+            </div>
+            <div class="col-3 mx-auto d-block border-right border-left">
+                <h3>Погода</h3>
+            </div>
+        </div>
+        {%for a in range(2)%}
+        <div class="row">
+            <div class="col-1 mx-auto d-block border-right border-left">
+                <h5>{{a}}</h5>
+            </div>
+            <div class="col-5 mx-auto d-block border-right border-left">
+                <h5>Название города</h5>
+            </div>
+            <div class="col-3 mx-auto d-block border-right border-left">
+                <h5>Температура</h5>
+            </div>
+            <div class="col-3 mx-auto d-block border-right border-left">
+                <h5>Погода</h5>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}
