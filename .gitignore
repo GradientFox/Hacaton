@@ -1,4 +1,7 @@
-
+config.py
+Weather_API_Key.py
+__pycache__
+.ipynb_checkpoints
 *.iml
 *.iml
 *.xml
