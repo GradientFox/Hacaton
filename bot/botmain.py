@@ -1,7 +1,12 @@
 # bot - @Shashlik5Bot
+import requests
+import json
 from aiogram import Bot, Dispatcher, executor, types
-import bot.config  # create in bot a file config.py with constant TOKEN = "*your token*"  !gitignore
 
+import bot.config  # create in bot a file config.py with constant TOKEN = "*your token*"  !gitignore
+import config
+
+ServerURL = f"http://{config.host}:{config.port}/weatherHandler"
 TOKEN = bot.config.TOKEN
 
 bot = Bot(token=TOKEN)
@@ -30,9 +35,12 @@ async def commands(message: types.Message):
 
 @dp.message_handler()
 async def getPosition(message: types.Message):
-    # тут должен быть запрос на сервер обработка ответа
-    # await message.answer()
-    ...
+    fromserver = requests.post(ServerURL, data={'city': message.text})
+    if fromserver.text[0] == '{' and fromserver.text[-2] == '}':
+        dictFromServer = eval(fromserver.text)
+        await message.answer(
+            f"{dictFromServer['city']}. {dictFromServer['temp']} градуса. {dictFromServer['weather']}.")
+
 
 def startBot():
     executor.start_polling(dp, skip_updates=True)
