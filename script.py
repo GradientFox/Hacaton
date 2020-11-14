@@ -28,6 +28,17 @@ def index():
         city = request.form["search"]
         return redirect('/places')
 
+
+@app.route('/places', methods=["GET", "POST"])
+def places():
+    if request.method == "GET":
+        return render_template('table.html')
+    if request.method == "POST":
+        print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
+        city = request.form["search"]
+        return redirect('/places')
+
+
 @app.route('/weatherHandler', methods=["POST"])
 def weatherHandler():
     # config = get_default_config()  # get_config_from("config.json")
