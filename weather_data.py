@@ -2,13 +2,13 @@ from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
 import parsing
 import math
-
+from Weather_API_Key import KEY
 
 def weather(city, radius):
     geo_data = []
     config = get_default_config()
     config['language'] = 'en'
-    owm = OWM('2551509fa0abff6e6e92e5e159ad0f2b', config=config)
+    owm = OWM(KEY, config=config)
 
     mgr = owm.weather_manager()
     reg = owm.city_id_registry()
