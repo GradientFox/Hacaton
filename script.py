@@ -19,6 +19,15 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
+@app.route('/', methods=["GET", "POST"])
+def index():
+    if request.method == "GET":
+        return render_template('main.html')
+    if request.method == "POST":
+        print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
+        city = request.form["search"]
+        return redirect('/places')
+
 @app.route('/weatherHandler', methods=["POST"])
 def weatherHandler():
     # config = get_default_config()  # get_config_from("config.json")
