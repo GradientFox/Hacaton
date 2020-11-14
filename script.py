@@ -2,11 +2,11 @@ from flask import Flask, render_template, request, redirect, url_for, session, m
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 
-from pyowm.owm import OWM
-from pyowm.utils.config import get_default_config
-
-import Weather_API_Key #create Weather_API_Key with constant KEY = "api-key"  !gitignore
-from  bot.botmain import startBot
+# from pyowm.owm import OWM
+# from pyowm.utils.config import get_default_config
+#
+# import Weather_API_Key #create Weather_API_Key with constant KEY = "api-key"  !gitignore
+# from  bot.botmain import startBot
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'HelloworldByeWorld'
@@ -22,6 +22,8 @@ def index():
     if request.method == "GET":
         return render_template('main.html')
     if request.method == "POST":
+        print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
+        city = request.form["search"]
         return redirect('/places')
 
 

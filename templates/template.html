@@ -16,7 +16,13 @@
       <a class="navbar-brand" href="/"><span>Шашлык</span></a>
     </div>
     <form class="form-inline my-2 my-lg-0" style="float:right;" method="POST">
-      <input class="form-control mr-sm-2" type="search" placeholder="Введите ваш город..." aria-label="Search" style="width:300px;">
+      <input class="form-control mr-sm-2" type="search" placeholder="Введите ваш город..." aria-label="Search" style="width:300px;" name="search">
+      <select class="custom-select mr-sm-2" id="inputGroupSelect01" name="radius">
+        <option selected>Радиус</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
       <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Отправить</button>
     </form>
   </nav>
