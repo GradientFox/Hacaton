@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, m
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 
+from  bot.botmain import startBot
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'HelloworldByeWorld'
@@ -10,3 +11,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+if __name__ == "__main__":
+    db.create_all()
+    startBot()
+    app.run(port=5000)
