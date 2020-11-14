@@ -17,6 +17,7 @@ def weather(city, radius):
         list_of_geopoints = reg.geopoints_for(f'{city}')
         lat = list_of_geopoints[0].lat
         lng = list_of_geopoints[0].lon
+        first_temp = mgr.one_call(lat=lat, lon=lng).current.temperature('celsius')["temp"]
         cities = parsing.html(lat, lng, radius)
     except:
         return None
@@ -26,14 +27,14 @@ def weather(city, radius):
             list_of_geopoints = reg.geopoints_for(f'{city}')
             weather = mgr.one_call(lat=list_of_geopoints[0].lat, lon=list_of_geopoints[0].lon).current
             temp = weather.temperature('celsius')
-            geo_data.append([city[0].upper()+city.lower()[1:], temp["temp"], temp["feels_like"]//1, weather.detailed_status[0].upper()+weather.detailed_status[1:]])
+            if abs(temp["temp"]-first_temp) <= 7:
+                geo_data.append([city[0].upper()+city.lower()[1:], temp["temp"], temp["feels_like"]//1, weather.detailed_status[0].upper()+weather.detailed_status[1:]])
             '''
             print(f'Температура в городе {city[0].upper()+city.lower()[1:]} {temp["temp"]}, ощущается как {temp["feels_like"]//1},\
  {weather.detailed_status}')
             '''
         except:
-            pass
-        
+            pass 
     return geo_data
 
 
