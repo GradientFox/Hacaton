@@ -9,6 +9,7 @@ import threading
 import Weather_API_Key  # create Weather_API_Key with constant KEY = "api-key"  !gitignore
 from bot.botmain import startBot
 import config
+from weather_data import weather
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'HelloworldByeWorld'
@@ -41,14 +42,19 @@ def places():
 
 @app.route('/weatherHandler', methods=["POST"])
 def weatherHandler():
-    # config = get_default_config()  # get_config_from("config.json")
-    # config['language'] = 'ru'
-    # owm = OWM(Weather_API_Key.KEY, config=config)
-    # mgr = owm.weather_manager()
-
-    #Отладка
-    print(request.form['city'])
-    return jsonify(city=request.form['city'], temp="34", weather="good")
+    t = weather(request.form['city'], request.form['radius'])
+    if t==None:
+        return jsonify(city=["Incorrect input"], temp=["-300"], weather=[''])
+    else:
+        t.sort(key=lambda p: p[1], reverse=True)
+        cities = []
+        temps = []
+        weathers = []
+        for i in range(len(t)):
+            cities.append(t[i][0])
+            temps.append(t[i][1])
+            weathers.append(t[i][3])
+        return jsonify(city=cities, temp=temps, weather=weathers)
 
 
 def startServer():

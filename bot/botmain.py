@@ -17,29 +17,27 @@ dp = Dispatcher(bot)
 async def commands(message: types.Message):
     comm = message.get_command()
     if comm == "/help":
-        await message.answer("Укажите населенный пункт, в котором вы сейчас.\nНапример:")
-        await message.answer("Екатеринбург")
-        await message.answer("Сысерть. 2 градуса. Солнечно")
         await message.answer(
-            "После получения информации вы можете запросить топ-список мест через /top")
-        await message.answer("/top")
-        await message.answer("Сысерть. 2 градуса. Солнечно\nБерезовский. -1 градус. Снег")
+            "Specify the settlement in which you are now and the search radius. For instance:")
+        await message.answer("Yekaterinburg 50")
+        await message.answer("Sysert. °2 С. Sunny\nBerezovsky. -1 °С. Snow")
     elif comm == "/start":
         await message.answer(
-            "Здравствуйте! Я бот, который покажет вам лучшие места рядом в вами. Укажите своё местоположение (Например 'Екатеринбург')")
-    elif comm == "/top":
-        # тут должен быть запрос на сервер обработка ответа
-        # await message.answer()
-        ...
+            "Hello! I am a bot that will show you the best places near you. Indicate your location (For example 'Yekaterinburg')")
 
 
 @dp.message_handler()
 async def getPosition(message: types.Message):
-    fromserver = requests.post(ServerURL, data={'city': message.text})
+    city, radius = message.text.split()
+    fromserver = requests.post(ServerURL, data={'city': city, 'radius': radius})
     if fromserver.text[0] == '{' and fromserver.text[-2] == '}':
         dictFromServer = eval(fromserver.text)
-        await message.answer(
-            f"{dictFromServer['city']}. {dictFromServer['temp']} градуса. {dictFromServer['weather']}.")
+        cities = dictFromServer['city']
+        temps = dictFromServer['temp']
+        weathers = dictFromServer['weather']
+        answerStr = '\n'.join(
+            [f"{cities[i]}. {temps[i]} °C. {weathers[i]}" for i in range(len(cities))])
+        await message.answer(answerStr)
 
 
 def startBot():
