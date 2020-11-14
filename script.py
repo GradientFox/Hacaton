@@ -7,7 +7,7 @@ from pyowm.utils.config import get_default_config
 from weather_data import weather
 import threading
 import Weather_API_Key  # create Weather_API_Key with constant KEY = "api-key"  !gitignore
-# from bot.botmain import startBot
+from bot.botmain import startBot
 import config
 from weather_data import weather
 
@@ -25,14 +25,14 @@ def index():
     if request.method == "GET":
         return render_template('main.html')
     if request.method == "POST":
-        print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
+        #print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
         city = request.form["search"]
         radius = request.form["radius"]
         t = weather(city, radius)
         if t:
             for i in range(len(t)):
                 t[i].append(i+1)
-            print(t)
+            #print(t)
             return render_template('table.html', place=t, main_city=request.form["search"])
         else:
             flash('Неверные данные')
@@ -61,7 +61,6 @@ def startServer():
 
 
 if __name__ == "__main__":
-    app.run()
-    # s = threading.Thread(target=startServer)
-    # s.start()
-    # startBot()
+    s = threading.Thread(target=startServer)
+    s.start()
+    startBot()

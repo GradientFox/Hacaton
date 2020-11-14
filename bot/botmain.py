@@ -1,6 +1,5 @@
 # bot - @Shashlik5Bot
 import requests
-import json
 from aiogram import Bot, Dispatcher, executor, types
 
 import bot.config  # create in bot a file config.py with constant TOKEN = "*your token*"  !gitignore
@@ -23,7 +22,7 @@ async def commands(message: types.Message):
         await message.answer("Sysert. °2 С. Sunny\nBerezovsky. -1 °С. Snow")
     elif comm == "/start":
         await message.answer(
-            "Hello! I am a bot that will show you the best places near you. Indicate your location (For example 'Yekaterinburg')")
+            "Hello! I am a bot that will show you the best places near you. Indicate your location (For example: Yekaterinburg 20)")
 
 
 @dp.message_handler()
