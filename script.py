@@ -1,10 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for, session, \
     make_response, flash
 import datetime
-from flask_sqlalchemy import SQLAlchemy
-from pyowm.owm import OWM
-from pyowm.utils.config import get_default_config
-from weather_data import weather
 import threading
 import Weather_API_Key  # create Weather_API_Key with constant KEY = "api-key"  !gitignore
 from bot.botmain import startBot
@@ -17,7 +13,7 @@ app.permanent_session_lifetime = datetime.timedelta(days=365)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+
 
 
 @app.route('/', methods=["GET", "POST"])
