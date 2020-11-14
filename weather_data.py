@@ -14,7 +14,7 @@ def weather(city, radius):
     reg = owm.city_id_registry()
 
     try:
-        list_of_geopoints = reg.geopoints_for(f'{city}')
+        list_of_geopoints = reg.geopoints_for(f'{city}', country='RU')
         lat = list_of_geopoints[0].lat
         lng = list_of_geopoints[0].lon
         cities = parsing.html(lat, lng, radius)

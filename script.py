@@ -42,6 +42,7 @@ def index():
 @app.route('/weatherHandler', methods=["POST"])
 def weatherHandler():
     t = weather(request.form['city'], request.form['radius'])
+    print('ok')
     if t==None:
         return jsonify(city=["Incorrect input"], temp=["-300"], weather=[''])
     else:

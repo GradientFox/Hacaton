@@ -27,16 +27,20 @@ async def commands(message: types.Message):
 
 @dp.message_handler()
 async def getPosition(message: types.Message):
-    city, radius = message.text.split()
-    fromserver = requests.post(ServerURL, data={'city': city, 'radius': radius})
-    if fromserver.text[0] == '{' and fromserver.text[-2] == '}':
-        dictFromServer = eval(fromserver.text)
-        cities = dictFromServer['city']
-        temps = dictFromServer['temp']
-        weathers = dictFromServer['weather']
-        answerStr = '\n'.join(
-            [f"{cities[i]}. {temps[i]} °C. {weathers[i]}" for i in range(len(cities))])
-        await message.answer(answerStr)
+    try:
+        city, radius = message.text.split()
+        fromserver = requests.post(ServerURL, data={'city': city, 'radius': radius})
+        if fromserver.text[0] == '{' and fromserver.text[-2] == '}':
+            dictFromServer = eval(fromserver.text)
+            cities = dictFromServer['city']
+            temps = dictFromServer['temp']
+            weathers = dictFromServer['weather']
+            answerStr = '\n'.join(
+                [f"{cities[i]}. {temps[i]} °C. {weathers[i]}" for i in range(len(cities))])
+            await message.answer(answerStr)
+    except:
+        await message.answer("Incorrect input")
+
 
 
 def startBot():
