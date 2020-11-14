@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session, make_response, flash
 import datetime
 from flask_sqlalchemy import SQLAlchemy
+from pyowm.owm import OWM
+from pyowm.utils.config import get_default_config
 
-#from bot.botmain import startBot
+import Weather_API_Key #create Weather_API_Key with constant KEY = "api-key"  !gitignore
+from  bot.botmain import startBot
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'HelloworldByeWorld'
@@ -17,6 +20,13 @@ db = SQLAlchemy(app)
 def index():
     if request.method == "GET":
         return render_template('main.html')
+@app.route('/weatherHandler', methods=["POST"])
+def weatherHandler():
+    config = get_default_config()  # get_config_from("config.json")
+    config['language'] = 'ru'
+    owm = OWM(Weather_API_Key.KEY, config=config)
+    mgr = owm.weather_manager()
+
 
 
 if __name__ == "__main__":
