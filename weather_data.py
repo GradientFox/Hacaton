@@ -1,6 +1,7 @@
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
 import parsing
+import math
 
 
 def weather(city, radius):
@@ -22,8 +23,8 @@ def weather(city, radius):
 
     for city in cities:
         try:
-            place = mgr.weather_at_place(f'{city},RU')
-            weather = place.weather
+            list_of_geopoints = reg.geopoints_for(f'{city}')
+            weather = mgr.one_call(lat=list_of_geopoints[0].lat, lon=list_of_geopoints[0].lon).current
             temp = weather.temperature('celsius')
             geo_data.append([city[0].upper()+city.lower()[1:], temp["temp"], temp["feels_like"]//1, weather.detailed_status[0].upper()+weather.detailed_status[1:]])
             '''
