@@ -1,12 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session, make_response, flash
+from flask import Flask, jsonify, render_template, request, redirect, url_for, session, \
+    make_response, flash
 import datetime
 from flask_sqlalchemy import SQLAlchemy
+from pyowm.owm import OWM
+from pyowm.utils.config import get_default_config
 
-# from pyowm.owm import OWM
-# from pyowm.utils.config import get_default_config
-#
-# import Weather_API_Key #create Weather_API_Key with constant KEY = "api-key"  !gitignore
-# from  bot.botmain import startBot
+import threading
+import Weather_API_Key  # create Weather_API_Key with constant KEY = "api-key"  !gitignore
+from bot.botmain import startBot
+import config
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = 'HelloworldByeWorld'
@@ -26,24 +28,23 @@ def index():
         city = request.form["search"]
         return redirect('/places')
 
-
-@app.route('/places', methods=["GET", "POST"])
-def places():
-    if request.method == "GET":
-        return render_template('table.html')
-    if request.method == "POST":
-        return redirect('/places')
-
-
 @app.route('/weatherHandler', methods=["POST"])
 def weatherHandler():
-    config = get_default_config()  # get_config_from("config.json")
-    config['language'] = 'ru'
-    owm = OWM(Weather_API_Key.KEY, config=config)
-    mgr = owm.weather_manager()
+    # config = get_default_config()  # get_config_from("config.json")
+    # config['language'] = 'ru'
+    # owm = OWM(Weather_API_Key.KEY, config=config)
+    # mgr = owm.weather_manager()
+
+    #Отладка
+    print(request.form['city'])
+    return jsonify(city=request.form['city'], temp="34", weather="good")
+
+
+def startServer():
+    app.run(host=config.host, port=int(config.port))
 
 
 if __name__ == "__main__":
-    db.create_all()
-    # startBot()
-    app.run(port=5000)
+    s = threading.Thread(target=startServer)
+    s.start()
+    startBot()
