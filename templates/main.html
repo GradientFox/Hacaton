@@ -1,3 +1,29 @@
 {%extends "template.html"%}
-{%block title%}{%end block%}
-{%block content%}{%end block%}
+{%block title%}Шашлык{%endblock%}
+{%block content%}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="justify-content: space-between;padding-left:100px;padding-right:100px">
+    <div class="navbar-brand">
+        <img src="/static/logo-place.png" style="width:50px;height:auto">
+    <span>Шашлык</span>
+        </div>
+      <form class="form-inline my-2 my-lg-0" style="float:right;">
+        <input class="form-control mr-sm-2" type="search" placeholder="Введите ваш город..." aria-label="Search" style="width:300px;">
+        <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Отправить</button>
+      </form>
+</nav>
+<div style="height:60px;width:100%;">
+</div>
+<img src="/static/holiday.jpg" style="object-fit: cover;height:250px;width:100%;">
+<div style="height:2000px;margin-left:100px;margin-right:100px">
+    <br>
+    <div style='text-align: center; font-family:"Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif'>
+        <h1>Шашлык</h1>
+    </div>
+    <br>
+    <div style="background-color:#EDEDED; font-size:22px;" class="p-5">
+        <p>
+            Один из лучший поисковых систем для отдыха дружной компанией. Если куда поехать, то с помощью нашей высокотехнологичной системы вы сможете узнать лучшие места. Просто введите свое местоположение в поиск и нажмите кнопку отправки и вы получите лучшие места для вас.
+        </p>
+    </div>
+</div>
+{%endblock%}
