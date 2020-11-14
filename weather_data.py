@@ -12,11 +12,13 @@ def weather(city, radius):
     mgr = owm.weather_manager()
     reg = owm.city_id_registry()
 
-    list_of_geopoints = reg.geopoints_for(f'{city}')
-    lat = list_of_geopoints[0].lat
-    lng = list_of_geopoints[0].lon
-
-    cities = parsing.html(lat, lng, radius)
+    try:
+        list_of_geopoints = reg.geopoints_for(f'{city}')
+        lat = list_of_geopoints[0].lat
+        lng = list_of_geopoints[0].lon
+        cities = parsing.html(lat, lng, radius)
+    except:
+        return None
 
     for city in cities:
         try:
@@ -30,6 +32,7 @@ def weather(city, radius):
             '''
         except:
             pass
+        
     return geo_data
 
 
