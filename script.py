@@ -4,10 +4,10 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from pyowm.owm import OWM
 from pyowm.utils.config import get_default_config
-
+from weather_data import weather
 import threading
 import Weather_API_Key  # create Weather_API_Key with constant KEY = "api-key"  !gitignore
-from bot.botmain import startBot
+# from bot.botmain import startBot
 import config
 
 app = Flask(__name__, static_url_path='/static')
@@ -26,17 +26,16 @@ def index():
     if request.method == "POST":
         print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
         city = request.form["search"]
-        return redirect('/places')
-
-
-@app.route('/places', methods=["GET", "POST"])
-def places():
-    if request.method == "GET":
-        return render_template('table.html')
-    if request.method == "POST":
-        print(f'Search: {request.form["search"]}; Radius: {request.form["radius"]}')
-        city = request.form["search"]
-        return redirect('/places')
+        radius = request.form["radius"]
+        t = weather(city, radius)
+        if t:
+            for i in range(len(t)):
+                t[i].append(i+1)
+            print(t)
+            return render_template('table.html', place=t, main_city=request.form["search"])
+        else:
+            flash('Неверные данные')
+            return render_template('main.html')
 
 
 @app.route('/weatherHandler', methods=["POST"])
@@ -56,6 +55,7 @@ def startServer():
 
 
 if __name__ == "__main__":
-    s = threading.Thread(target=startServer)
-    s.start()
-    startBot()
+    app.run()
+    # s = threading.Thread(target=startServer)
+    # s.start()
+    # startBot()

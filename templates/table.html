@@ -15,7 +15,7 @@
     </div>
     <br>
     <span style="text-align:center;">
-        <h2>Москва</h2>
+        <h2>{{main_city}}</h2>
     </span>
     <br>
     <div style="padding-left:50px;padding-right:50px;">
@@ -24,28 +24,28 @@
                 <h3>№</h3>
             </div>
             <div class="col-5 mx-auto d-block border-right border-left">
-                <h3>Название города</h3>
+                <h3>Название места</h3>
             </div>
             <div class="col-3 mx-auto d-block border-right border-left">
-                <h3>Температура</h3>
+                <h3>Температура/Ощущение</h3>
             </div>
             <div class="col-3 mx-auto d-block border-right border-left">
                 <h3>Погода</h3>
             </div>
         </div>
-        {%for a in range(2)%}
+        {%for a in place%}
         <div class="row">
             <div class="col-1 mx-auto d-block border-right border-left">
-                <h5>{{a}}</h5>
+                <h5>{{a[4]}}</h5>
             </div>
             <div class="col-5 mx-auto d-block border-right border-left">
-                <h5>Название города</h5>
+                <h5>{{a[0]}}</h5>
             </div>
             <div class="col-3 mx-auto d-block border-right border-left">
-                <h5>Температура</h5>
+                <h5>{{a[1]}} / {{a[2]}} °C</h5>
             </div>
             <div class="col-3 mx-auto d-block border-right border-left">
-                <h5>Погода</h5>
+                <h5>{{a[3]}}</h5>
             </div>
         </div>
         {%endfor%}
